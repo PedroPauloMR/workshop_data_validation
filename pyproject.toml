@@ -1,0 +1,3 @@
+[tool.taskipy.tasks]
+run = "taskkill /F /IM python.exe & streamlit run src/app.py"
+test = "taskkill /F /IM python.exe & pytest tests"
