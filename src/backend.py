@@ -3,7 +3,7 @@ import os
 from contrato import Vendas 
 from dotenv import load_dotenv
 
-load_dotenv('.env')
+load_dotenv()
 
 POSTGRES_USER = os.getenv('POSTGRES_USER')
 POSTGRES_PASSWORD = os.getenv('POSTGRES_PASSWORD')
@@ -20,7 +20,7 @@ def process_excel(uploaded_file):
 
         extra_cols = set(df.columns) - set(Vendas.model_fields.keys())
         if extra_cols:
-            return False, f"Colunas extras detectadas no Excel: {', '.join(extra_cols)}"
+            return None,False, f"Colunas extras detectadas no Excel: {', '.join(extra_cols)}"
         
         for index, row in df.iterrows():
             try:
@@ -28,13 +28,13 @@ def process_excel(uploaded_file):
             except Exception as e:
                 raise ValueError(f"Erro na linha {index + 2}: {e}")
             
-        return True, None
+        return df,True, None
     
     except ValueError as ve:
-        return  False, str(ve)
+        return  None,False, str(ve)
     
     except Exception as e:
-        return  False, f"Erro inesperado: {str(e)}"
+        return  None,False, f"Erro inesperado: {str(e)}"
     
 
 def excel_to_sql(df):
