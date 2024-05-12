@@ -15,7 +15,7 @@ class ExcelValidadorUI:
         return st.file_uploader('Carregue seu arquivo EXCEL aqui', type = ['xlsx'])
 
 
-    def displauy_results(self, result,error):
+    def display_results(self, result,error):
         if error:
             st.error(f'Erro na validação: {error}')
         else:
